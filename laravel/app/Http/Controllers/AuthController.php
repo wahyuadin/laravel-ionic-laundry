@@ -42,8 +42,8 @@ class AuthController extends Controller
                 'username'  => 'required',
                 'password'  => 'required',
                 'email'     => 'required|email|unique:users,email',
-                'hp'        => 'required',
-                'alamat'    => 'required',
+                'hp'        => 'nullable',
+                'alamat'    => 'nullable',
             ]);
 
             $data = $request->all();

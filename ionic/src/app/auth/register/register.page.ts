@@ -17,7 +17,6 @@ export class RegisterPage {
   confirmPassword: string = '';
 
   constructor(
-    private router: Router,
     private toastCtrl: ToastController,
     private apiService: ApiService,
     private Router: Router
@@ -30,6 +29,7 @@ export class RegisterPage {
     }
 
     let body = {
+      'nama' : this.nama,
       'username': this.nama,
       'email': this.email,
       'password': this.password,

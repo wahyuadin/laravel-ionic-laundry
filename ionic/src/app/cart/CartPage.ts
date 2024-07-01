@@ -115,14 +115,12 @@ export class CartPage{
                 this.apiService.postDataOrder(data).subscribe({
                     next: (res: any) => {
                       this.responsePostOrder = res;
-                      console.log(this.responsePostOrder)
-                      this.router.navigate(['/cart/success']);
-                      // this.apiService.wa(userData.user?.phone).subscribe({
-                      //   next: () => {
-                      //     this.router.navigate(['/cart/success']);
-                      //     this.presentAlert('Berhasil Di Cekout!');
-                      //   }
-                      // })
+                      this.apiService.wa(userData.user?.hp).subscribe({
+                        next: () => {
+                          this.router.navigate(['/cart/success']);
+                          this.presentAlert('Berhasil Di Cekout!');
+                        }
+                      })
                   },
                   error: (error) => {
                     if (error.status === 401) {

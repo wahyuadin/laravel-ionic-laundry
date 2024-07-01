@@ -23,7 +23,6 @@ class Middleware
             return redirect()->route('login');
         }
 
-        // Jika pengguna terotentikasi, lanjutkan ke pengecekan peran (role)
         if (Auth::user()->role != 1) {
             Alert::warning('Peringatan', 'Login User Tidak Diperbolehkan!');
             return redirect()->route('login');

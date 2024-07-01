@@ -6,6 +6,7 @@ use App\Models\Kategori;
 use App\Models\Order;
 use App\Models\Produk;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -138,5 +139,36 @@ class ApiController extends Controller
 
     public function profile_show($id) {
         return response()->json(['error' => false, 'data' => User::where('id',$id)->get()]);
+    }
+
+    public function wa($phone) {
+        $data = [
+            'apiKey' => 'ac6510ceffcc46679a59b1ef86828a61',
+            'phone' => $phone,
+            'message' => "Terimakasih telah order di kami! Mohon ditunggu, kami akan segera ke alamat anda.",
+        ];
+
+        // URL API yang akan dituju
+        $apiUrl = 'http://98.142.245.14:41243/api/sendMessage';
+
+        // Menggunakan Guzzle untuk membuat permintaan POST
+        $client = new Client();
+        try {
+            $response = $client->request('POST', $apiUrl, [
+                'form_params' => $data,
+            ]);
+
+            // Mendapatkan status code dari response
+            $statusCode = $response->getStatusCode();
+
+            // Mendapatkan body response
+            $body = $response->getBody()->getContents();
+
+            return response()->json(['error' => false, 'data' => $body], $statusCode);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to send message: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 }

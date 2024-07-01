@@ -12,6 +12,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'cors'], function() {
     Route::middleware('api')->group(function () {
+        Route::get('wa/{number}', [ApiController::class, 'wa']);
         Route::get('kategori', [ApiController::class, 'kategori']);
         Route::prefix('order')->group(function () {
             Route::post('/', [ApiController::class, 'order']);

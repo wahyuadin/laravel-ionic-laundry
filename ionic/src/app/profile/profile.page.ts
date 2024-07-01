@@ -17,7 +17,6 @@ export class ProfilePage implements OnInit {
   result: any;
 
   constructor(
-    private navCtrl: NavController,
     private Router: Router,
     private toastCtrl: ToastController,
     private apiService: ApiService,
@@ -95,8 +94,8 @@ export class ProfilePage implements OnInit {
               nama: this.responseData.data[0].nama,
               username: this.responseData.data[0].username,
               email: this.responseData.data[0].email,
-              address: this.responseData.data[0].address,
-              phone: this.responseData.data[0].phone
+              alamat: this.responseData.data[0].alamat,
+              hp: this.responseData.data[0].hp
             };
           } else {
             body = {
@@ -104,16 +103,20 @@ export class ProfilePage implements OnInit {
               username: this.responseData.data[0].username,
               password: this.data.password,
               email: this.responseData.data[0].email,
-              address: this.responseData.data[0].address,
-              phone: this.responseData.data[0].phone
+              alamat: this.responseData.data[0].alamat,
+              hp: this.responseData.data[0].hp
             };
           }
 
         }
         this.apiService.putDataProfile(userId, body).subscribe({
-          next: () => {;
-              this.presentToast('Update Data Berhasil !.');
-              this.Router.navigate(['/home']);
+          next: () => {
+              this.apiService.logout().subscribe({
+                next: () => {
+                  this.presentToast('Update Data Berhasil !.');
+                  this.Router.navigate(['/login']);
+                },
+              })
           },
           error: (error) => {
               if (error.status === 401) {
