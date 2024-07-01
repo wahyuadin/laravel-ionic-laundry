@@ -1,0 +1,58 @@
+<ion-content>
+  <ion-refresher slot="fixed" [pullFactor]="0.5" [pullMin]="100" [pullMax]="200" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list lines="none" style="margin-left: 30px;" *ngFor="let get of responseData?.data">
+    <ion-item-sliding *ngIf="responseData" >
+      <ion-item>
+        <div class="cart-item">
+          <div class="image" style="margin-left: 15px; margin-bottom: 10px;">
+            <ion-img src="{{ get.produk.link }}"></ion-img>
+          </div>
+          <div class="description">
+            <h3>{{ get.produk.nama }}</h3>
+            <p><sup>Rp</sup>{{ get.produk.harga }}</p>
+          </div>
+
+          <div class="actions">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <div class="counter">{{ get.berat }}</div>
+            <ion-buttons>
+              <ion-button>
+                <ion-icon slot="icon-only" name="remove"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option>
+          <ion-icon name="trash-outline" size="large" color="danger"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-button style="margin-left: 40px; margin-bottom: 30px;" expand="block" *ngIf="(responseData)" (click)="Cekout()">
+    <ng-content>Cekout</ng-content>
+  </ion-button>
+
+  <div class="empty-cart" *ngIf="!(responseData) ">
+    <ion-icon name="cart"></ion-icon>
+    <p>Your cart is empty</p>
+  </div>
+</ion-content>
+<ion-tab-bar slot="bottom">
+  <ion-tab-button routerLink="/">
+    <ion-icon name="home"></ion-icon>
+  </ion-tab-button>
+  <ion-tab-button tab="wishlist">
+    <ion-icon name="bag-handle-outline" routerLink="/pesanan"></ion-icon>
+  </ion-tab-button>
+  <ion-tab-button tab="cart">
+    <ion-icon name="cart" routerLink="/cart"></ion-icon>
+  </ion-tab-button>
+</ion-tab-bar>
